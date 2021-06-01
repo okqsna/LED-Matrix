@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>LED matrix</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrap {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .diode {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            margin: 5px;
+            float: left;
+            transition: 0.4s ease;
+
+        }
+
+        .matrix {
+            border: 1px solid #333;
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 30px;
+            background-color: rgba(128, 128, 128, 0.1);
+
+        }
+
+        .name {
+            position: relative;
+            top: 10px;
+            font-family: monospace;
+            font-weight: 900;
+            font-size: 15px;
+        }
+
+        input {
+            width: 200px;
+            height: 30px;
+            border-radius: 3px;
+            padding: 0 10px;
+            border: 1px solid #333;
+
+        }
+
+        button {
+            width: 50px;
+            height: 30px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 1px solid #333;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="inputs">
+
+            <input type="text" id="inp" placeholder="type your text">
+            <button id="add">add</button>
+        </div>
+        <div class="matrix">
+            <div class="diode" id="d1_1"></div>
+            <div class="diode" id="d1_2"></div>
+            <div class="diode" id="d1_3"></div>
+            <div class="diode" id="d1_4"></div>
+            <div class="diode" id="d1_5"></div>
+            <br>
+
+            <div class="diode" id="d2_1"></div>
+            <div class="diode" id="d2_2"></div>
+            <div class="diode" id="d2_3"></div>
+            <div class="diode" id="d2_4"></div>
+            <div class="diode" id="d2_5"></div>
+            <br>
+
+            <div class="diode" id="d3_1"></div>
+            <div class="diode" id="d3_2"></div>
+            <div class="diode" id="d3_3"></div>
+            <div class="diode" id="d3_4"></div>
+            <div class="diode" id="d3_5"></div>
+            <br>
+
+            <div class="diode" id="d4_1"></div>
+            <div class="diode" id="d4_2"></div>
+            <div class="diode" id="d4_3"></div>
+            <div class="diode" id="d4_4"></div>
+            <div class="diode" id="d4_5"></div>
+            <br>
+
+            <div class="diode" id="d5_1"></div>
+            <div class="diode" id="d5_2"></div>
+            <div class="diode" id="d5_3"></div>
+            <div class="diode" id="d5_4"></div>
+            <div class="diode" id="d5_5"></div>
+            <br>
+
+            <div class="diode" id="d6_1"></div>
+            <div class="diode" id="d6_2"></div>
+            <div class="diode" id="d6_3"></div>
+            <div class="diode" id="d6_4"></div>
+            <div class="diode" id="d6_5"></div>
+            <br>
+
+            <div class="diode" id="d7_1"></div>
+            <div class="diode" id="d7_2"></div>
+            <div class="diode" id="d7_3"></div>
+            <div class="diode" id="d7_4"></div>
+            <div class="diode" id="d7_5"></div>
+            <br>
+
+            <div class="name">LED Matrix</div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+        let diodeColor = "orange";
+        let clearColor = "white";
+        let errorColor = "red";
+
+
+        function clear() {
+            document.getElementById('d1_1').style.backgroundColor = clearColor;
+            document.getElementById('d1_2').style.backgroundColor = clearColor;
+            document.getElementById('d1_3').style.backgroundColor = clearColor;
+            document.getElementById('d1_4').style.backgroundColor = clearColor;
+            document.getElementById('d1_5').style.backgroundColor = clearColor;
+
+            document.getElementById('d2_1').style.backgroundColor = clearColor;
+            document.getElementById('d2_2').style.backgroundColor = clearColor;
+            document.getElementById('d2_3').style.backgroundColor = clearColor;
+            document.getElementById('d2_4').style.backgroundColor = clearColor;
+            document.getElementById('d2_5').style.backgroundColor = clearColor;
+
+            document.getElementById('d3_1').style.backgroundColor = clearColor;
+            document.getElementById('d3_2').style.backgroundColor = clearColor;
+            document.getElementById('d3_3').style.backgroundColor = clearColor;
+            document.getElementById('d3_4').style.backgroundColor = clearColor;
+            document.getElementById('d3_5').style.backgroundColor = clearColor;
+
+            document.getElementById('d4_1').style.backgroundColor = clearColor;
+            document.getElementById('d4_2').style.backgroundColor = clearColor;
+            document.getElementById('d4_3').style.backgroundColor = clearColor;
+            document.getElementById('d4_4').style.backgroundColor = clearColor;
+            document.getElementById('d4_5').style.backgroundColor = clearColor;
+
+            document.getElementById('d5_1').style.backgroundColor = clearColor;
+            document.getElementById('d5_2').style.backgroundColor = clearColor;
+            document.getElementById('d5_3').style.backgroundColor = clearColor;
+            document.getElementById('d5_4').style.backgroundColor = clearColor;
+            document.getElementById('d5_5').style.backgroundColor = clearColor;
+
+            document.getElementById('d6_1').style.backgroundColor = clearColor;
+            document.getElementById('d6_2').style.backgroundColor = clearColor;
+            document.getElementById('d6_3').style.backgroundColor = clearColor;
+            document.getElementById('d6_4').style.backgroundColor = clearColor;
+            document.getElementById('d6_5').style.backgroundColor = clearColor;
+
+            document.getElementById('d7_1').style.backgroundColor = clearColor;
+            document.getElementById('d7_2').style.backgroundColor = clearColor;
+            document.getElementById('d7_3').style.backgroundColor = clearColor;
+            document.getElementById('d7_4').style.backgroundColor = clearColor;
+            document.getElementById('d7_5').style.backgroundColor = clearColor;
+
+
+        }
+        clear();
+
+        add.onclick = function() {
+            let str = inp.value.toLowerCase();
+            inp.value = '';
+            let i = 0;
+            let timerId = setInterval(function() {
+                if (i < str.length) {
+                    switch (str[i]) {
+                        case 'a':
+                            clear();
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'b':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            break;
+                        case 'c':
+                            clear();
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'd':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            break;
+                        case 'e':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'f':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'g':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case '.':
+                            clear();
+                            document.getElementById('d3_3').style.backgroundColor = errorColor;
+                            document.getElementById('d2_2').style.backgroundColor = errorColor;
+                            document.getElementById('d2_4').style.backgroundColor = errorColor;
+                            document.getElementById('d3_1').style.backgroundColor = errorColor;
+                            document.getElementById('d3_2').style.backgroundColor = errorColor;
+                            document.getElementById('d3_3').style.backgroundColor = errorColor;
+                            document.getElementById('d3_4').style.backgroundColor = errorColor;
+                            document.getElementById('d3_5').style.backgroundColor = errorColor;
+                            document.getElementById('d4_1').style.backgroundColor = errorColor;
+                            document.getElementById('d4_2').style.backgroundColor = errorColor;
+                            document.getElementById('d4_3').style.backgroundColor = errorColor;
+                            document.getElementById('d4_4').style.backgroundColor = errorColor;
+                            document.getElementById('d4_5').style.backgroundColor = errorColor;
+                            document.getElementById('d5_2').style.backgroundColor = errorColor;
+                            document.getElementById('d5_3').style.backgroundColor = errorColor;
+                            document.getElementById('d5_4').style.backgroundColor = errorColor;
+                            document.getElementById('d6_3').style.backgroundColor = errorColor;
+                            break;
+                        case 'h':
+                            clear();
+
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            break;
+
+                        case 'i':
+                            clear();
+
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            break;
+
+                        case 'j':
+                            clear();
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+                            break;
+
+                        case 'k':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'l':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'm':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'n':
+                            clear();
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'o':
+                            clear();
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'p':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'q':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'r':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 's':
+                            clear();
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 't':
+                            clear();
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'u':
+                            clear();
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'v':
+                            clear();
+                            document.getElementById('d3_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'w':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'x':
+                            clear();
+                            document.getElementById('d2_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_5').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'y':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'z':
+                            clear();
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'а':
+                            clear();
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'б':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            break;
+                        case 'в':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            break;
+
+                        case 'г':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'ґ':
+                            clear();
+                            document.getElementById('d1_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'д':
+                            clear();
+
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_5').style.backgroundColor = diodeColor;
+                            break;
+                        case 'е':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'є':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'ж':
+                            clear();
+                            document.getElementById('d2_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_5').style.backgroundColor = diodeColor;
+                            break;
+                        case 'з':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'и':
+                            clear();
+                            document.getElementById('d3_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'і':
+                            clear();
+
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            break;
+                        case 'ї':
+                            clear();
+
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            break;
+                        case 'й':
+                            clear();
+
+                            document.getElementById('d1_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d1_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'к':
+                            clear();
+
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+
+                        case 'л':
+                            clear();
+
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'м':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'н':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'о':
+                            clear();
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'п':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'р':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'с':
+                            clear();
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            break;
+                        case 'т':
+                            clear();
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'у':
+                            clear();
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'у':
+                            clear();
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'ф':
+                            clear();
+                            document.getElementById('d1_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d7_3').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'х':
+                            clear();
+                            document.getElementById('d2_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_5').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'ц':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d7_5').style.backgroundColor = diodeColor;
+
+                            break;
+                        case 'ч':
+                            clear();
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'ш':
+                            clear();
+                            document.getElementById('d2_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_5').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'щ':
+                            clear();
+                            document.getElementById('d2_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_5').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'ь':
+                            clear();
+                            document.getElementById('d3_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+
+                            break;
+                        case 'ю':
+                            clear();
+                            document.getElementById('d2_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_5').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+
+
+
+                            break;
+
+                        case 'я':
+                            clear();
+                            document.getElementById('d1_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d1_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d2_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d3_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d4_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_3').style.backgroundColor = diodeColor;
+                            document.getElementById('d5_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_2').style.backgroundColor = diodeColor;
+                            document.getElementById('d6_4').style.backgroundColor = diodeColor;
+                            document.getElementById('d7_1').style.backgroundColor = diodeColor;
+                            document.getElementById('d7_4').style.backgroundColor = diodeColor;
+
+
+
+                            break;
+                            
+
+
+
+
+
+
+
+
+
+                    }
+                    i++
+                } else {
+                    clear();
+                    clearInterval(timerId);
+                }
+            }, 1000)
+
+        }
+
+    </script>
+
+</body>
+
+</html>
